@@ -39,6 +39,20 @@ sudo cp -r /usr/local/include/eigen3/Eigen /usr/include  安装到usr/include就
 eigen 版本切换
 https://zhuanlan.zhihu.com/p/592334705
 
+4 cuda10.0 安装   为什么驱动470版本安装cuda10 就掉驱动 重启就黑屏！！！！注意 但是最开始也没这样啊
+
+官网有安装命令 以及下载
+https://developer.nvidia.com/cuda-10.0-download-archive?target_os=Linux&target_arch=x86_64&target_distro=Ubuntu&target_version=1804&target_type=deblocal
+ 错误：The following packages have unmet dependencies:
+ cuda : Depends: cuda-10-0 (>= 10.0.130) but it is not going to be installed
+ 
+解决
+#install aptitude
+sudo apt-get install aptitude
+#Install main package
+sudo aptitude install cuda
+
+
 安装opencv3.4.0前要先安装eigen3.3.7
 opencv和opencv_contrib下载地址：
 https://github.com/opencv/opencv/releases
