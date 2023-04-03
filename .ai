@@ -1,0 +1,7 @@
+安装ros melodic
+官网 http://wiki.ros.org/cn/melodic/Installation/Ubuntu
+
+跟着https://blog.csdn.net/weixin_42343975/article/details/124754154  装cmake
+（注意软链接时的路径要改为自己的 eg. /home/yurou/cmake-3.12.2-Linux-x86_64/bin）
+
+安装opencv3.4.0前要先安装eigen3.3.7
