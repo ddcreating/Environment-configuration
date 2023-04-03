@@ -1,7 +1,49 @@
-安装ros melodic
-官网 http://wiki.ros.org/cn/melodic/Installation/Ubuntu
+1、首先安装ros melodic
+官网 http://wiki.ros.org/melodic/Installation/Ubuntu
+如果提示找不到rosdep命令 就安装一下这个 sudo apt install python-rosdep2
+安装依赖这个命令可以先不执行，不然运行roscore的安装会有依赖问题发生 sudo apt install python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential
 
-跟着https://blog.csdn.net/weixin_42343975/article/details/124754154  装cmake
+2、装cmake
+跟着https://blog.csdn.net/weixin_42343975/article/details/124754154  
 （注意软链接时的路径要改为自己的 eg. /home/yurou/cmake-3.12.2-Linux-x86_64/bin）
 
+3、安装eigen3.3.7
+https://blog.csdn.net/weixin_56257452/article/details/124956362
+安装步骤：
+
+# 解压
+sudo tar -xzvf eigen-3.3.7.tar.gz 
+ 
+# 安装
+
+第一步：
+cd eigen-3.3.7
+
+第二步：
+mkdir build
+
+第三步：
+cd build
+
+第四步：
+sudo cmake ..
+
+第五步：
+sudo make install
+ 
+#安装后,头文件安装在/usr/local/include/eigen3/
+ 第六步：移动头文件：
+ 
+sudo cp -r /usr/local/include/eigen3/Eigen /usr/include  安装到usr/include就是替换了系统装的eigen的位置
+
+eigen 版本切换
+https://zhuanlan.zhihu.com/p/592334705
+
 安装opencv3.4.0前要先安装eigen3.3.7
+opencv和opencv_contrib下载地址：
+https://github.com/opencv/opencv/releases
+https://github.com/opencv/opencv_contrib/releases
+对应安装看这几个就可以
+https://blog.csdn.net/qcz1024/article/details/119280637
+https://blog.csdn.net/qq_41080854/article/details/88609795
+https://blog.csdn.net/hiram_zhang/article/details/103467737（装opencv+opencv_contrib的，好用）
