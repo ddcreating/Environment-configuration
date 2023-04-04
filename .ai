@@ -44,6 +44,7 @@ yurou@FX:~$ dmesg |grep NVRM
 https://blog.csdn.net/bu2_int/article/details/103585209?utm_medium=distribute.wap_relevant.none-task-blog-2~default~baidujs_
 baidulandingword~default-0-103585209-blog-128852337.wap_relevant_featuresortv7&spm=1001.2101.3001.4242.1
 装驱动和显卡推荐这个  https://blog.csdn.net/zhang970187013/article/details/81012845
+可以装改成470的  https://blog.csdn.net/dhdhhy/article/details/128579652
 
 2、首先安装ros melodic
 官网 http://wiki.ros.org/melodic/Installation/Ubuntu
