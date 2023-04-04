@@ -14,6 +14,12 @@ https://github.com/Kin-Zhang/simple_ndt_slam
 
 官网有安装命令 以及下载
 https://developer.nvidia.com/cuda-10.0-download-archive?target_os=Linux&target_arch=x86_64&target_distro=Ubuntu&target_version=1804&target_type=deblocal
+ 建议永runfile文件版本安装
+ 注意运行sudo sh cuda_10.0.130_410.48_linux.run 之后的这个选项 选择no，不然容易驱动错误，因为这个我苦恼了两天！！！！！
+ Install NVIDIA Accelerated Graphics Driver for Linux-x86_64 410.48?
+(y)es/(n)o/(q)uit:
+
+ 用.deb包安装容易出错
  错误：The following packages have unmet dependencies:
  cuda : Depends: cuda-10-0 (>= 10.0.130) but it is not going to be installed
  
@@ -45,9 +51,26 @@ https://blog.csdn.net/bu2_int/article/details/103585209?utm_medium=distribute.wa
 baidulandingword~default-0-103585209-blog-128852337.wap_relevant_featuresortv7&spm=1001.2101.3001.4242.1
 装驱动和显卡推荐这个  https://blog.csdn.net/zhang970187013/article/details/81012845
 可以装改成470的  https://blog.csdn.net/dhdhhy/article/details/128579652
+都试了 没有用 然后重装了三四次系统 心态崩了这两天，还好最后用runfile的方式安装解决了！！
 
 2、首先安装ros melodic
 官网 http://wiki.ros.org/melodic/Installation/Ubuntu
+具体步骤：
+#1、Setup your sources.list
+sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+
+#2、Set up your keys
+sudo apt install curl # if you haven't already installed curl
+curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
+
+#3、Installation
+sudo apt update
+sudo apt install ros-melodic-desktop-full
+
+#报错   E: The repository 'http://packages.ros.org/ros/ubuntu kylin Release' does not have a Release file.
+解决方法：#1替换 https://blog.csdn.net/qq_43135204/article/details/116762888 不行 sudo apt install ros-melodic-desktop-full会继续报错
+        #2、删掉https://answers.ros.org/question/402151/the-repository-does-not-have-a-release-file/ 会报错E: Unable to locate package ros-melodic-desktop-full
+
 如果提示找不到rosdep命令 就安装一下这个 sudo apt install python-rosdep2
 安装依赖这个命令可以先不执行，不然运行roscore的安装会有依赖问题发生 sudo apt install python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential
 
