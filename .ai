@@ -34,6 +34,8 @@ sudo apt install python-rosdep
 sudo rosdep init
 rosdep update
 
+不知道是那个步骤出了问题，如果软件与更新这个打不开 第三步install就会出错
+以及我用刚重装的系统来装ros 也遇到这个问题 软件与更新也没打开 不知道是不是装了ubuntu微信导致的问题，因为这次没装微信 新系统就可以顺利安装 软件与更新也能打开
 #报错   E: The repository 'http://packages.ros.org/ros/ubuntu kylin Release' does not have a Release file.
 解决方法：#1替换 https://blog.csdn.net/qq_43135204/article/details/116762888 不行 sudo apt install ros-melodic-desktop-full会继续报错
         #2、删掉https://answers.ros.org/question/402151/the-repository-does-not-have-a-release-file/ 会报错E: Unable to locate package ros-melodic-desktop-full
@@ -41,11 +43,15 @@ rosdep update
 如果提示找不到rosdep命令 就安装一下这个 sudo apt install python-rosdep2
 安装依赖这个命令可以先不执行，不然运行roscore的安装会有依赖问题发生 sudo apt install python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential
 
-1 cuda10.0 安装   为什么驱动470版本安装cuda10 就掉驱动 重启就黑屏！！！！注意 但是最开始也没这样啊
+2、 cuda10.0 安装   为什么驱动470版本安装cuda10 就掉驱动 重启就黑屏！！！！注意 但是最开始也没这样啊
 
+教程
+只有cuda     1、https://blog.csdn.net/discoverer100/article/details/101764703
+cuda+cudnn  2、https://blog.csdn.net/qq_43744723/article/details/119135242
 官网有安装命令 以及下载
 https://developer.nvidia.com/cuda-10.0-download-archive?target_os=Linux&target_arch=x86_64&target_distro=Ubuntu&target_version=1804&target_type=deblocal
- 建议永runfile文件版本安装
+ 建议用runfile文件版本安装！！！！！！！！！！
+ 选择runfile安装方式，坑会少很多！！！！！！！！！！！！！！！！！！！！！！！！！
  注意运行sudo sh cuda_10.0.130_410.48_linux.run 之后的这个选项 选择no，不然容易驱动错误，因为这个我苦恼了两天！！！！！
  Install NVIDIA Accelerated Graphics Driver for Linux-x86_64 410.48?
 (y)es/(n)o/(q)uit:
@@ -86,7 +92,13 @@ baidulandingword~default-0-103585209-blog-128852337.wap_relevant_featuresortv7&s
 
 3、装cmake
 跟着https://blog.csdn.net/weixin_42343975/article/details/124754154  
-（注意软链接时的路径要改为自己的 eg. /home/yurou/cmake-3.12.2-Linux-x86_64/bin）
+（注意软链接时的路径要改为自己的 eg. /home/yu/cmake-3.12.2-Linux-x86_64/bin）
+
+步骤
+wget https://cmake.org/files/v3.12/cmake-3.12.2-Linux-x86_64.tar.gz
+tar zxvf cmake-3.12.2-Linux-x86_64.tar.gz 
+sudo ln -sf /home/hb-wgl/cmake-3.12.2-Linux-x86_64/bin/* /usr/bin/
+cmake --version  #检查版本
 
 4、安装eigen3.3.7
 https://blog.csdn.net/weixin_56257452/article/details/124956362
@@ -113,21 +125,79 @@ sudo cmake ..
 sudo make install
  
 #安装后,头文件安装在/usr/local/include/eigen3/
+
  第六步：移动头文件：
- 
-sudo cp -r /usr/local/include/eigen3/Eigen /usr/include  安装到usr/include就是替换了系统装的eigen的位置
+#sudo cp -r /usr/local/include/eigen3/Eigen /usr/local/include  这是博主的安装位置，但是系统会找不到我们的这个版本，所以我们切换一下位置到系统目录/usr/include
+#另外移动之前 我们不删除系统自带的eigen版本 我的系统目前的3.3.4的版本 在/usr/include下 执行以下命令:sudo mv eigen3 eigen334，将原本的名字改掉 不然我们下个命令会有名字一样的冲突
+#同时也要修改/usr/share/pkgconfig文件夹下的eigen3.pc这个文件，因为ubuntu系统是通过eigen3.pc这个文件搜索eigen库的，怎么修改在下面的eigen版本切换链接中
+
+sudo cp -r /usr/local/include/eigen3 /usr/include  安装到usr/include就是替换了系统装的eigen的位置
+vim /usr/include/eigen3/Eigen/src/Core/util/Macros.h #查看系统Eigen版本：
 
 eigen 版本切换
 https://zhuanlan.zhihu.com/p/592334705
 
 5、安装opencv3.4.0前要先安装eigen3.3.7
+  先安装opencv3.4.0，再安装对应的contrib
 opencv和opencv_contrib下载地址：
 https://github.com/opencv/opencv/releases
 https://github.com/opencv/opencv_contrib/releases
-对应安装看这几个就可以
-https://blog.csdn.net/qcz1024/article/details/119280637
+
+1、在编译和安装opencv源码之前，需要先安装相关依赖库，安装命令如下：
+    sudo apt-get install build-essential 
+    sudo apt-get install cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev
+    sudo apt-get install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev
+
+2、上面命令执行会报错，错误说libjaster-dev无法安装，解决办法如下：
+     sudo add-apt-repository "deb http://security.ubuntu.com/ubuntu xenial-security main"
+     sudo apt update
+     sudo apt install libjasper1 libjasper-dev
+  
+3、解压opencv3.4.0 然后进入文件夹
+      sudo mkdir build
+      cd build
+  正常情况下使用如下cmake命令即可
+    # cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr/local ..
+  但是，由于cuda10.0对环境有点不支持，可能需要加上-D BUILD_opencv_cudacodec=OFF
+     cmake -D CMAKE_BUILD_TYPE=Release -D BUILD_opencv_cudacodec=OFF -D CMAKE_INSTALL_PREFIX=/usr/local ..    
+   如果cmake有错是解决不了那种，建议删除opencv文件夹下面的build 然后重新编译
+
+     make -j8 #8个线程编译,查看cpu核数量
+     sudo make install  #  安装
+      
+4、配置opencv编译环境，将其添加到系统路径中
+     # 打开配置文件，可能是空文件
+     sudo gedit /etc/ld.so.conf.d/opencv.conf
+在出现的编辑器中加上如下，保存
+     /usr/local/lib
+使配置生效
+     sudo ldconfig  
+配置bash.bash.rc
+     sudo gedit /etc/bash.bashrc
+在最后面添加下面两条路径
+      PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig  
+      export PKG_CONFIG_PATH
+保存，使配置生效
+      source /etc/bash.bashrc
+      sudo updatedb #更新
+
+
+安装contrib的时候
+3、 （1）用cmake-gui工具配置opencv编译参数
+     sudo apt-get install cmake-gui
+    (2)设置cmake参数  
+       打开终端，输入下面的命令，启动cmake-gui工具: 
+       cmake-gui
+     在打开的界面中，将where is the source code栏中设成opencv-3.2.0的路径，
+     将where to build the binaries栏中设成opencv-3.2.0/build的路径，如下图所示。
+ 
+
+
+参考安装 对应安装看这几个就可以
+https://blog.csdn.net/qcz1024/article/details/119280637 这个是+contrib一起编译de
 https://blog.csdn.net/qq_41080854/article/details/88609795
-https://blog.csdn.net/hiram_zhang/article/details/103467737（装opencv+opencv_contrib的，好用）
+https://blog.csdn.net/hiram_zhang/article/details/103467737（装opencv_contrib的，好用）
+
 
 6、安装QT
 https://blog.csdn.net/u010779035/article/details/85321603
