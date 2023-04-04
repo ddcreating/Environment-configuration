@@ -1,3 +1,15 @@
+autoware安装的一些链接
+最开始的：https://www.cnblogs.com/hgl0417/p/14617025.html
+古月居的：https://www.guyuehome.com/37565
+https://blog.csdn.net/zhao5269/article/details/106827618 比较多其他安装的配置 就是有问题有的
+https://blog.csdn.net/weixin_42343975/article/details/124754154
+这是有很多链接报错信息那个 ：https://blog.csdn.net/weixin_58207716/article/details/126057475
+这里面也有一些报错信息 https://blog.csdn.net/qq_34935373/article/details/120141905
+
+
+简易版建图
+https://github.com/Kin-Zhang/simple_ndt_slam
+
 1 cuda10.0 安装   为什么驱动470版本安装cuda10 就掉驱动 重启就黑屏！！！！注意 但是最开始也没这样啊
 
 官网有安装命令 以及下载
@@ -31,7 +43,7 @@ yurou@FX:~$ dmesg |grep NVRM
  https://blog.csdn.net/weixin_43825748/article/details/112979312
 https://blog.csdn.net/bu2_int/article/details/103585209?utm_medium=distribute.wap_relevant.none-task-blog-2~default~baidujs_
 baidulandingword~default-0-103585209-blog-128852337.wap_relevant_featuresortv7&spm=1001.2101.3001.4242.1
-https://blog.csdn.net/zhang970187013/article/details/81012845
+装驱动和显卡推荐这个  https://blog.csdn.net/zhang970187013/article/details/81012845
 
 2、首先安装ros melodic
 官网 http://wiki.ros.org/melodic/Installation/Ubuntu
@@ -74,10 +86,7 @@ sudo cp -r /usr/local/include/eigen3/Eigen /usr/include  安装到usr/include就
 eigen 版本切换
 https://zhuanlan.zhihu.com/p/592334705
 
-
-
-
-安装opencv3.4.0前要先安装eigen3.3.7
+5、安装opencv3.4.0前要先安装eigen3.3.7
 opencv和opencv_contrib下载地址：
 https://github.com/opencv/opencv/releases
 https://github.com/opencv/opencv_contrib/releases
@@ -85,3 +94,6 @@ https://github.com/opencv/opencv_contrib/releases
 https://blog.csdn.net/qcz1024/article/details/119280637
 https://blog.csdn.net/qq_41080854/article/details/88609795
 https://blog.csdn.net/hiram_zhang/article/details/103467737（装opencv+opencv_contrib的，好用）
+
+6、安装QT
+https://blog.csdn.net/u010779035/article/details/85321603
