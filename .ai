@@ -138,11 +138,11 @@ eigen 版本切换
 https://zhuanlan.zhihu.com/p/592334705
 
 5、安装opencv3.4.0前要先安装eigen3.3.7
-  先安装opencv3.4.0，再安装对应的contrib
 opencv和opencv_contrib下载地址：
 https://github.com/opencv/opencv/releases
 https://github.com/opencv/opencv_contrib/releases
 
+单独装opencv
 1、在编译和安装opencv源码之前，需要先安装相关依赖库，安装命令如下：
     sudo apt-get install build-essential 
     sudo apt-get install cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev
@@ -158,7 +158,8 @@ https://github.com/opencv/opencv_contrib/releases
       cd build
   正常情况下使用如下cmake命令即可
     # cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr/local ..
-  但是，由于cuda10.0对环境有点不支持，可能需要加上-D BUILD_opencv_cudacodec=OFF
+  但是，由于cuda10.0对环境有点不支持！！！！！！！！！！！
+   可能需要加上-D BUILD_opencv_cudacodec=OFF
      cmake -D CMAKE_BUILD_TYPE=Release -D BUILD_opencv_cudacodec=OFF -D CMAKE_INSTALL_PREFIX=/usr/local ..    
    如果cmake有错是解决不了那种，建议删除opencv文件夹下面的build 然后重新编译
 
@@ -182,22 +183,60 @@ https://github.com/opencv/opencv_contrib/releases
       sudo updatedb #更新
 
 
-安装contrib的时候
-3、 （1）用cmake-gui工具配置opencv编译参数
-     sudo apt-get install cmake-gui
-    (2)设置cmake参数  
-       打开终端，输入下面的命令，启动cmake-gui工具: 
-       cmake-gui
-     在打开的界面中，将where is the source code栏中设成opencv-3.2.0的路径，
-     将where to build the binaries栏中设成opencv-3.2.0/build的路径，如下图所示。
- 
+opencv+opencv_contrib
+下载好解压后，将opencv_contrib-3.4.0放在opencv-3.4.0文件夹里面。在opencv-3.4.0文件夹中新建一个build文件夹以进行后面的编译。
+
+1、 配置环境步骤都一样
+2、 在opencv-3.4.0文件夹下，进入build文件夹
+     cd build
+   然后在该路径下cmake
+     sudo cmake -D CMAKE_BUILD_TYPE=Release -D BUILD_opencv_cudacodec=OFF -D CMAKE_INSTALL_PREFIX=/usr/local -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib-3.4.0/modules ..
+     sudo make -j8  #执行make命令  这次没出错 我感觉自己真的狗屎运了！！被环境搞怕了！
+3. 执行make install命令
+   sudo make install
+
+4、配置opencv编译环境，将其添加到系统路径中
+     # 打开配置文件，可能是空文件
+     sudo gedit /etc/ld.so.conf.d/opencv.conf
+在出现的编辑器中加上如下，保存
+     /usr/local/lib
+使配置生效
+     sudo ldconfig  
+配置bash.bash.rc
+     sudo gedit /etc/bash.bashrc
+在最后面添加下面两条路径
+      PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig  
+      export PKG_CONFIG_PATH
+保存，使配置生效
+      source /etc/bash.bashrc
+      sudo updatedb #更新
+
+
+如果缺文件
+boostdesc_bgm_bi.i
+        boostdesc_bgm_hd.i
+        boostdesc_binboost_064.i
+        boostdesc_binboost_128.i
+        boostdesc_binboost_256.i
+        vgg_generated_120.i
+        vgg_generated_64.i
+        vgg_generated_80.i
+        vgg_generated_48.i
+百度网盘有： https://pan.baidu.com/s/1GZ2cisdhBKE9FXEIYfioQg   提取码：9356 
+
+将下载下来的压缩文件解压，把里面的所有文件拷贝到opencv-3.4.0/opencv_contrib-3.4.0/modules/xfeatures2d/src下面。
+然后，前面的问题没有了，到99%时，可能又有新问题了：
+比如 致命错误：找不到 "/opencv2/xfeatures2d/cuda.hpp"  这个 可以在https://blog.csdn.net/qq_29931565/article/details/120572013找到解决方式；
 
 
 参考安装 对应安装看这几个就可以
 https://blog.csdn.net/qcz1024/article/details/119280637 这个是+contrib一起编译de
 https://blog.csdn.net/qq_41080854/article/details/88609795
-https://blog.csdn.net/hiram_zhang/article/details/103467737（装opencv_contrib的，好用）
+https://blog.csdn.net/hiram_zhang/article/details/103467737（装opencv_contrib的）
+https://blog.csdn.net/libai13/article/details/108354956（opencv+opencv_contrib）
+https://blog.csdn.net/qq_29931565/article/details/120572013 
+（opencv+opencv_contrib，感觉最可靠，文章中是这个完成的，cmake编译的时候加了-D BUILD_opencv_cudacodec=OFF，不然会报错）
 
 
-6、安装QT
+6、安装QT 5.12.0
 https://blog.csdn.net/u010779035/article/details/85321603
