@@ -10,6 +10,27 @@ https://blog.csdn.net/weixin_42343975/article/details/124754154
 简易版建图
 https://github.com/Kin-Zhang/simple_ndt_slam
 
+1、首先安装ros melodic
+官网 http://wiki.ros.org/melodic/Installation/Ubuntu
+具体步骤：
+#1、Setup your sources.list
+sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+
+#2、Set up your keys
+sudo apt install curl # if you haven't already installed curl
+curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
+
+#3、Installation
+sudo apt update
+sudo apt install ros-melodic-desktop-full
+
+#报错   E: The repository 'http://packages.ros.org/ros/ubuntu kylin Release' does not have a Release file.
+解决方法：#1替换 https://blog.csdn.net/qq_43135204/article/details/116762888 不行 sudo apt install ros-melodic-desktop-full会继续报错
+        #2、删掉https://answers.ros.org/question/402151/the-repository-does-not-have-a-release-file/ 会报错E: Unable to locate package ros-melodic-desktop-full
+
+如果提示找不到rosdep命令 就安装一下这个 sudo apt install python-rosdep2
+安装依赖这个命令可以先不执行，不然运行roscore的安装会有依赖问题发生 sudo apt install python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential
+
 1 cuda10.0 安装   为什么驱动470版本安装cuda10 就掉驱动 重启就黑屏！！！！注意 但是最开始也没这样啊
 
 官网有安装命令 以及下载
@@ -52,27 +73,6 @@ baidulandingword~default-0-103585209-blog-128852337.wap_relevant_featuresortv7&s
 装驱动和显卡推荐这个  https://blog.csdn.net/zhang970187013/article/details/81012845
 可以装改成470的  https://blog.csdn.net/dhdhhy/article/details/128579652
 都试了 没有用 然后重装了三四次系统 心态崩了这两天，还好最后用runfile的方式安装解决了！！
-
-2、首先安装ros melodic
-官网 http://wiki.ros.org/melodic/Installation/Ubuntu
-具体步骤：
-#1、Setup your sources.list
-sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-
-#2、Set up your keys
-sudo apt install curl # if you haven't already installed curl
-curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
-
-#3、Installation
-sudo apt update
-sudo apt install ros-melodic-desktop-full
-
-#报错   E: The repository 'http://packages.ros.org/ros/ubuntu kylin Release' does not have a Release file.
-解决方法：#1替换 https://blog.csdn.net/qq_43135204/article/details/116762888 不行 sudo apt install ros-melodic-desktop-full会继续报错
-        #2、删掉https://answers.ros.org/question/402151/the-repository-does-not-have-a-release-file/ 会报错E: Unable to locate package ros-melodic-desktop-full
-
-如果提示找不到rosdep命令 就安装一下这个 sudo apt install python-rosdep2
-安装依赖这个命令可以先不执行，不然运行roscore的安装会有依赖问题发生 sudo apt install python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential
 
 3、装cmake
 跟着https://blog.csdn.net/weixin_42343975/article/details/124754154  
