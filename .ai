@@ -1,13 +1,48 @@
-1、首先安装ros melodic
+1 cuda10.0 安装   为什么驱动470版本安装cuda10 就掉驱动 重启就黑屏！！！！注意 但是最开始也没这样啊
+
+官网有安装命令 以及下载
+https://developer.nvidia.com/cuda-10.0-download-archive?target_os=Linux&target_arch=x86_64&target_distro=Ubuntu&target_version=1804&target_type=deblocal
+ 错误：The following packages have unmet dependencies:
+ cuda : Depends: cuda-10-0 (>= 10.0.130) but it is not going to be installed
+ 
+解决
+#install aptitude
+sudo apt-get install aptitude
+#Install main package
+sudo aptitude install cuda
+
+装cuda之后重启会黑屏 之前几次 
+然后去查看发现驱动没有了
+报错
+yurou@FX:~$ nvidia-smi
+Failed to initialize NVML: Driver/library version mismatch
+然后查看 发现驱动版本不匹配 应该是安装cuda的时候也安装了驱动
+yurou@FX:~$ dmesg |grep NVRM
+[    3.676206] NVRM: loading NVIDIA UNIX x86_64 Kernel Module  470.161.03  Wed Oct 19 00:10:36 UTC 2022
+[ 7578.966043] NVRM: API mismatch: the client has the version 410.48, but
+               NVRM: this kernel module has the version 470.161.03.  Please
+               NVRM: make sure that this kernel module and all NVIDIA driver
+               NVRM: components have the same version.
+[ 7925.397818] NVRM: API mismatch: the client has the version 410.48, but
+               NVRM: this kernel module has the version 470.161.03.  Please
+               NVRM: make sure that this kernel module and all NVIDIA driver
+               NVRM: components have the same version.
+ 解决链接
+ https://blog.csdn.net/weixin_43825748/article/details/112979312
+https://blog.csdn.net/bu2_int/article/details/103585209?utm_medium=distribute.wap_relevant.none-task-blog-2~default~baidujs_
+baidulandingword~default-0-103585209-blog-128852337.wap_relevant_featuresortv7&spm=1001.2101.3001.4242.1
+https://blog.csdn.net/zhang970187013/article/details/81012845
+
+2、首先安装ros melodic
 官网 http://wiki.ros.org/melodic/Installation/Ubuntu
 如果提示找不到rosdep命令 就安装一下这个 sudo apt install python-rosdep2
 安装依赖这个命令可以先不执行，不然运行roscore的安装会有依赖问题发生 sudo apt install python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential
 
-2、装cmake
+3、装cmake
 跟着https://blog.csdn.net/weixin_42343975/article/details/124754154  
 （注意软链接时的路径要改为自己的 eg. /home/yurou/cmake-3.12.2-Linux-x86_64/bin）
 
-3、安装eigen3.3.7
+4、安装eigen3.3.7
 https://blog.csdn.net/weixin_56257452/article/details/124956362
 安装步骤：
 
@@ -39,18 +74,7 @@ sudo cp -r /usr/local/include/eigen3/Eigen /usr/include  安装到usr/include就
 eigen 版本切换
 https://zhuanlan.zhihu.com/p/592334705
 
-4 cuda10.0 安装   为什么驱动470版本安装cuda10 就掉驱动 重启就黑屏！！！！注意 但是最开始也没这样啊
 
-官网有安装命令 以及下载
-https://developer.nvidia.com/cuda-10.0-download-archive?target_os=Linux&target_arch=x86_64&target_distro=Ubuntu&target_version=1804&target_type=deblocal
- 错误：The following packages have unmet dependencies:
- cuda : Depends: cuda-10-0 (>= 10.0.130) but it is not going to be installed
- 
-解决
-#install aptitude
-sudo apt-get install aptitude
-#Install main package
-sudo aptitude install cuda
 
 
 安装opencv3.4.0前要先安装eigen3.3.7
