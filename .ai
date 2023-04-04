@@ -10,6 +10,7 @@ https://blog.csdn.net/weixin_42343975/article/details/124754154
 简易版建图
 https://github.com/Kin-Zhang/simple_ndt_slam
 
+
 1、首先安装ros melodic
 官网 http://wiki.ros.org/melodic/Installation/Ubuntu
 具体步骤：
@@ -23,6 +24,15 @@ curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo ap
 #3、Installation
 sudo apt update
 sudo apt install ros-melodic-desktop-full
+
+#4. Environment setup
+echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+
+#5 Initialize rosdep
+sudo apt install python-rosdep
+sudo rosdep init
+rosdep update
 
 #报错   E: The repository 'http://packages.ros.org/ros/ubuntu kylin Release' does not have a Release file.
 解决方法：#1替换 https://blog.csdn.net/qq_43135204/article/details/116762888 不行 sudo apt install ros-melodic-desktop-full会继续报错
