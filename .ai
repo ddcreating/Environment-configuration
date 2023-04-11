@@ -11,8 +11,8 @@ https://blog.csdn.net/weixin_42343975/article/details/124754154
 https://github.com/Kin-Zhang/simple_ndt_slam
 
 注意：
-1、可以不用zsh，用bash的版本也可以
-2、保存地图前要下载service包 不然会找不命令
+1、可以不用zsh，用bash的版本也可以 
+2、保存地图前要安装map_server 不然会找不命令，sudo apt install ros-melodic-map-server
 3、play不放在launch文件中时，可以单独开启终端play
    先roslaunch lidar_localizer ndt_mapping.launch
    然后开新终端 source /opt/ros/melodic/setup.sh 再 rosbag play xxxx.bag
