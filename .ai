@@ -14,7 +14,7 @@ https://github.com/Kin-Zhang/simple_ndt_slam
 1、可以不用zsh，用bash的版本也可以
 2、保存地图前要下载service包 不然会找不命令
 3、play不放在launch文件中时，可以单独开启终端play
-   也要先roslaunch lidar_localizer ndt_mapping.launch
+   先roslaunch lidar_localizer ndt_mapping.launch
    然后开新终端 source /opt/ros/melodic/setup.sh 再 rosbag play xxxx.bag
    rosbag play的参数解释  
    -q 停止在工作台上打印播放的信息（不显示播放完成的进度；
@@ -22,10 +22,13 @@ https://github.com/Kin-Zhang/simple_ndt_slam
    -r 参数用来指定播放速度；
    -i 立即播放录制文件，不再等待0.2s了；
    --pause 暂停播放，等待按空格开启播放；
+ 4、保存pcd地图
+    cd cd ~/workspace/mapping_ws
+    source devel/setup.zsh
+    rosservice call /save_map '/home/yu/bags/save_map/fx_00.pcd' 0.0
 
 
-
-
+环境配置
 1、首先安装ros melodic
 官网 http://wiki.ros.org/melodic/Installation/Ubuntu
 具体步骤：
