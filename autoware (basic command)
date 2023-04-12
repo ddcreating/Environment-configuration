@@ -1,0 +1,7 @@
+1. 使用pcl_viewer可以查看pcd点云地图，使用如下命令进行安装：
+sudo apt-get install libpcl-dev
+sudo ln -s /usr/lib/libvtkproj4.so.5.10 /usr/lib/libvtkproj4.so
+sudo apt-get install pcl-tools
+
+ 使用如下命令打开点云地图：
+    pcl_viewer xxxx.pcd
