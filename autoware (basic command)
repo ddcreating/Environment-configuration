@@ -13,3 +13,13 @@ cd ndt_matching/
 colcon build      //catkin_make  //catkin build -DCMAKE_BUILD_TYPE=Release
 source install/local_setup.bash
 ros2 run ndt_matching ndt_node 
+
+每次运行前的环境设置
+source /opt/ros/galactic/setup.sh
+source install/setup.bash
+单独编译一个包的指令 colcon build --symlink-install --packages-select point_map_loader
+
+运行一个节点
+ros2 run map_loader pointcloud_map_loader --ros-args -p pcd_paths_or_directory:=["/home/yurou/savemap_test/fx_02.pcd"] -p enable_whole_load:=true -p enable_downsampled_whole_load:=false -p enable_partial_load:=false -p enable_differential_load:=false -p enable_selected_load:=false -p leaf_size:=3.0
+
+
