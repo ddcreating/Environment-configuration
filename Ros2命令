@@ -4,6 +4,12 @@ sudo apt update
 sudo apt install ~nros-foxy-rqt*
 安装完成后使用如下命令运行： rqt
 
+#rqt_graph
+可以从上帝视角看到整个系统的状态，ROS2中依然如此，我们还是使用这个工具来可视化显示节点和话题的连接关系。   
+在一个新的终端中，输入
+  rqt_graph
+看到熟悉的界面，里边清晰的展示了ROS计算图的网络形态。  
+
 小海龟仿真器的例子：
 https://www.guyuehome.com/10386
 
@@ -30,5 +36,21 @@ ros2 action list     #查看动作list
 我们还是不满足于仅仅看到节点的名字，如果想要了解节点的更多信息，那就得用这个命令了：
    ros2 node info <node_name>
 比如我想了解刚启动的my_turtle节点的更多信息：
-  ros2 node info /my_turtle
+  ros2 node info /my_turtle       ###可以用
  一下可以看到节点的很多信息，包括订阅者、发布者、服务、动作等等。  
+ 
+ 二、topic
+ros2 topic list       #查看系统中所有的话题
+ros2 topic list -t    #查看话题传输的是什么数据
+ros2 topic echo <topic_name>    #查看节点之间的话题到底发了什么数据内容
+e.g.  ros2 topic echo /turtle1/cmd_vel
+
+ros2 topic info /turtle1/cmd_vel  #查看话题的详细信息
+
+通过 ros2 topic list -t 可以看到， cmd_vel 话题的消息类型是： geometry_msgs/msg/Twist
+ros2 interface show geometry_msgs/msg/Twist      #查看数据类型的具体数据结构什么样, Twist中包含了两个三维向量，分别表示线速度和角速度。  
+ros2 topic pub <topic_name> <msg_type> '<args>'  #通过命令行来发布一个话题消息
+e.g. ros2 topic pub --rate 1 /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 1.8}}"
+
+ros2 topic hz /turtle1/pose  #查看某一个话题的发布频率
+
