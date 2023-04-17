@@ -1,0 +1,37 @@
+
+一、创建一个launch文件              https://www.guyuehome.com/11264
+package表示节点所在的功能包，executable表示要运行的可执行文件名，name表示启动后的节点名。  
+ros2 launch turtlesim_mimic_launch.py    #启动launch文件
+
+二、使用ros2 bag录制/回放数据             https://www.guyuehome.com/11320
+有的时候我们希望在别人已有的数据集上做开发，或者复现之前已经构建好的场景数据，这时候就可以用ROS2中的ros2 bag工具啦。ros2 bag是一个命令行工具，
+可以实现对ROS2系统中话题数据的录制和回放，选定的数据会被打包放到一个数据库文件中，未来使用该工具即可按照时间轴回放所有话题数据。在使用rosbag前，需要确认是否安装好了：
+sudo apt-get install ros-<distro>-ros2bag ros-<distro>-rosbag2*
+
+ros2 bag record <topic_name>    #录制话题数据
+该命令会将数据保存在当前终端所在的路径下，所以最好先cd到刚才创建好的目录下，然后运行：  e.g ros2 bag record /turtle1/cmd_vel
+完成录制后，在运行ros2 bag的终端中Ctrl+C即可停止录制，已经录制好的数据会保存在“ rosbag2_year_month_day-hour_minute_second”命名的文件中
+
+ros2 bag record -o subset /turtle1/cmd_vel /turtle1/pose   #录制多个话题的消息
+-o参数是用来设置数据库文件名的，此时文件名叫subset。多个话题名通过空格隔开就行；
+
+ros2 bag info <bag_file_name>    #查看数据库文件的信息
+ros2 bag play subset             #ros2 bag回放数据
+
+三. 创建ROS2工作空间                 https://www.guyuehome.com/11466
+ROS2中的工作空间类似我们常说的概念——“工程”，是我们在ROS中开发具体项目的空间，所有功能包的源码、配置、编译都在该空间下完成。
+开发多个项目，会产生多个工作空间，有一个层次的问题，类似于优先级的概念，ROS默认是启动最上层的工作空间（ overlay），
+上层工作空间中的功能包会覆盖（override）下层工作空间（underlay）中的同名功能包。有多个工作空间存在的时候，需要注意设置工作空间的层次。
+
+mkdir -p ~/dev_ws/src
+cd ~/dev_ws/src
+git clone https://github.com/ros/ros_tutorials.git -b galactic-devel    #放置例程代码
+colcon build     #编译工作空间
+
+设置环境变量
+接下来需要重新打开一个终端，然后来设置dev_ws工作空间的环境变量。  
+cd ~/dev_ws
+. install/local_setup.sh
+install里有两个很类似的文件：local_setup.sh和setup.sh，前者仅会设置当前工作空间中功能包的相关环境变量，
+后者还会设置该工作空间下其他底层工作空间的环境变量
+ros2 run turtlesim turtlesim_node
