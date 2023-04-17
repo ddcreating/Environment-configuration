@@ -18,6 +18,7 @@ ros2 node list      #查看节点list
 ros2 topic list     #查看话题list
 ros2 service list   #查看服务list
 ros2 action list     #查看动作list
+ros2 param list   #查看参数列表
 
  一、理解节点node  具体地址 https://www.guyuehome.com/10465
 1.ros2 run
@@ -39,13 +40,13 @@ ros2 action list     #查看动作list
   ros2 node info /my_turtle       ###可以用
  一下可以看到节点的很多信息，包括订阅者、发布者、服务、动作等等。  
  
- 二、topic
+ 二、理解topic  https://www.guyuehome.com/10560
 ros2 topic list       #查看系统中所有的话题
 ros2 topic list -t    #查看话题传输的是什么数据
-ros2 topic echo <topic_name>    #查看节点之间的话题到底发了什么数据内容
+ros2 topic echo <topic_name>    #查看节点之间的话题到底发了什么数据内容 线速度、角速度或者什么
 e.g.  ros2 topic echo /turtle1/cmd_vel
 
-ros2 topic info /turtle1/cmd_vel  #查看话题的详细信息
+ros2 topic info /turtle1/cmd_vel  #查看话题的详细信息。话题类型，发布者和订阅者的数量
 
 通过 ros2 topic list -t 可以看到， cmd_vel 话题的消息类型是： geometry_msgs/msg/Twist
 ros2 interface show geometry_msgs/msg/Twist      #查看数据类型的具体数据结构什么样, Twist中包含了两个三维向量，分别表示线速度和角速度。  
@@ -54,3 +55,39 @@ e.g. ros2 topic pub --rate 1 /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: 
 
 ros2 topic hz /turtle1/pose  #查看某一个话题的发布频率
 
+三、理解服务（Service） https://www.guyuehome.com/10721
+服务是基于客户端/服务器模型的通信机制，服务器端只在接收到客户端请求时才会提供反馈数据；
+可以多个客户端请求一个服务
+ros2 service list   #查看服务列表
+ros2 service list -t  #查看所有服务的数据类型 -t表示show type
+ros2 service type <service_name>  #查看某一个服务的数据结构 
+e.g. ros2 service type /clear #以/clear服务为例, Empty类型表示服务请求部分的数据是没有的，发送请求的时候不需要任何数据。  
+
+ros2 service find <type_name>   #查看所有提供同样数据类型的的服务
+ros2 service find std_srvs/srv/Empty #查找所有提供std_srvs/srv/Empty数据类型的服务
+
+ros2 interface show <type_name>.srv #查看数据类型具体的数据结构
+比如：ros2 interface show std_srvs/srv/Empty.srv
+终端中会显示：“---”， “---”在服务的数据结构中是用来分割请求和应答两个部分的数据，这里只所以只有“---”，
+是应为Empty的请求和应答都不需要任何数据描述，类似一个出发信号。 
+eg ros2 interface show turtlesim/srv/Spawn.srv  
+#这里可以看到，在Spawn服务的请求部分，由必须的x、y、theta和可选的name组成，应答数据则是name这个字符串。  
+
+ros2 service call <service_name> <service_type> <arguments>  #通过终端尝试发送一个服务请求，<arguments>部分是可选的，比如Empty类型的服务就没有任何参数
+e.g ros2 service call /clear std_srvs/srv/Empty   #这个服务只是出发一个信号，让海龟仿真器清除海龟后边的运动轨迹，不需要传输什么数据
+
+ 
+四、理解参数（Parameter）   https://www.guyuehome.com/10864
+ros2 param list  #看当前运行的系统中，有哪些参数
+ros2 param get <node_name> <parameter_name>  #查看某个参数的值
+ros2 param get /turtlesim background_g      # 比如看下背景颜色中的g值
+ros2 param set <node_name> <parameter_name> <value>  #设置某一个参数的值  
+ros2 param set /turtlesim background_r 150           # 比如修改仿真器背景色中的r值为150
+
+ros2 param dump <node_name>  #使用dump命令来保存节点所有的参数到文件中   
+ros2 param dump /turtlesim   #比如保存turtlesim节点的参数
+
+ros2 run <package_name> <executable_name> --ros-args --params-file <file_name>  #加载参数文件 
+比如：ros2 run turtlesim turtlesim_node --ros-args --params-file ./turtlesim.yaml
+
+五、理解动作（Action）
