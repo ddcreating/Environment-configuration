@@ -109,7 +109,7 @@ e.g ros2 action send_goal /turtle1/rotate_absolute turtlesim/action/RotateAbsolu
 从以上信息我们可以看到，每一个action目标都有一个唯一的ID。   如果先要看到action中的周期反馈，以上命令还需要加一个--feedback参数：
 ros2 action send_goal /turtle1/rotate_absolute turtlesim/action/RotateAbsolute "{theta: -1.57}" --feedback
 
-五、rqt_console工具的使用
+五、rqt_console工具的使用   RQT：模块化可视化工具    https://www.guyuehome.com/38313
 ros2 run rqt_console rqt_console
 rqt_graph   #查看更明确的节点关系
 
