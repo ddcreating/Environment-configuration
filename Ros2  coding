@@ -35,3 +35,22 @@ cd ~/dev_ws
 install里有两个很类似的文件：local_setup.sh和setup.sh，前者仅会设置当前工作空间中功能包的相关环境变量，
 后者还会设置该工作空间下其他底层工作空间的环境变量
 ros2 run turtlesim turtlesim_node
+
+四、创建ROS2功能包
+每个功能包中都会有这些文件：   CMake包：
+package.xml：功能包的描述信息
+CMakeLists.txt：描述CMake编译该功能包的规则
+  Python包：
+package.xml：功能包的描述信息
+setup.py：包含如何安装该包的说明
+setup.cfg：如果包内有可执行文件，需要设置该文件来让ros2 run命令找到它
+/<package_name>：包含 __init__.py 的文件夹，和功能包同名
+
+ros2 pkg create --build-type ament_cmake <package_name>   #创建功能包
+e.g  ros2 pkg create --build-type ament_cmake --node-name my_node my_package
+
+cd ~/dev_ws       #接下来进入编译流程，一定要将终端cd到dev_ws的路径下来：  
+colcon build      #然后就可以编译, 这个命令会编译工作空间中的所有功能包                    
+colcon build --packages-select my_package     #只编译某一个包
+
+. install/setup.bash   #打开一个新的终端，运行下工作空间的环境变量，这样才能让该终端找到新创建的包
