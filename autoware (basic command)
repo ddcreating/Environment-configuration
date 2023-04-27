@@ -22,13 +22,16 @@ source install/setup.bash
 运行aotuware的节点
 #map_loader
 ros2 run map_loader pointcloud_map_loader --ros-args -p pcd_paths_or_directory:=["/home/yurou/savemap_test/fx_02.pcd"] -p enable_whole_load:=true -p enable_downsampled_whole_load:=false -p enable_partial_load:=false -p enable_differential_load:=false -p enable_selected_load:=false -p leaf_size:=3.0
+# map_tf_generator
+ros2 launch map_tf_generator map_tf_generator.launch.xml 
+#map_height_fitter
+ros2 run pose_initializer map_height_fitter
 
 #pose_initializer
-ros2 launch pose_initializer pose_initializer.launch.xml 
+ros2 launch pose_initializer pose_initializer.launch.xml  #需要map_height_fitter，但是我启动了map_height_fitter，也没有用，所以应该怎么使这里有数据传给EKF
 
 #Ekf localizer
-ros2 launch ekf_localizer ekf_localizer.launch.xml 
-
+ros2 launch ekf_localizer ekf_localizer.launch.xml  #需要pose_initializer来初始位姿
 
 #ndt_scan_matcher
 ros2 run ndt_scan_matcher ndt_scan_matcher 
