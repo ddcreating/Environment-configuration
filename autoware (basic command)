@@ -20,6 +20,12 @@ source install/setup.bash
 单独编译一个包的指令 colcon build --symlink-install --packages-select point_map_loader
 
 运行aotuware的节点
+启动总的map节点，用路径
+ros2 launch /home/yurou/autoware/src/universe/autoware.universe/launch/tier4_map_launch/launch/map.launch.xml 
+
+用Rviz load地图，要先launch这个文件，上一个命令，然后再打开rviz，选择里面的 add->/by topic->/map 下面的pointcloud2，
+然后再结束launch文件导入的这个地图，这时候不要管Rviz，再重新launch地图文件，就可以看到地图了！！！
+
 #map_loader
 ros2 run map_loader pointcloud_map_loader --ros-args -p pcd_paths_or_directory:=["/home/yurou/savemap_test/fx_02.pcd"] -p enable_whole_load:=true -p enable_downsampled_whole_load:=false -p enable_partial_load:=false -p enable_differential_load:=false -p enable_selected_load:=false -p leaf_size:=3.0
 # map_tf_generator
@@ -35,4 +41,6 @@ ros2 launch ekf_localizer ekf_localizer.launch.xml  #需要pose_initializer来�
 
 #ndt_scan_matcher
 ros2 run ndt_scan_matcher ndt_scan_matcher 
+
+
 
