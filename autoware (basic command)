@@ -5,6 +5,8 @@ sudo apt-get install pcl-tools
  使用如下命令打开点云地图：
     pcl_viewer xxxx.pcd
 
+查看hz
+ros2 topic hz /lidar_front/points_xyzi 
 
 Instructions:
 source /opt/ros/galatic/setup.bash
@@ -22,6 +24,12 @@ source install/setup.bash
 运行aotuware的节点
 启动总的map节点，用路径
 ros2 launch /home/yurou/autoware/src/universe/autoware.universe/launch/tier4_map_launch/launch/map.launch.xml 
+
+启动localization的总节点
+ros2 launch /home/yurou/autoware/src/universe/autoware.universe/launch/tier4_localization_launch/launch/localization.launch.xml 
+
+ros2 play bag是play上层的文件，例如：
+ros2 bag play /home/yurou/dataset/rosbag2_2023_03_21-13_11_15/
 
 用Rviz load地图，要先launch这个文件，上一个命令，然后再打开rviz，选择里面的 add->/by topic->/map 下面的pointcloud2，
 然后再结束launch文件导入的这个地图，这时候不要管Rviz，再重新launch地图文件，就可以看到地图了！！！
