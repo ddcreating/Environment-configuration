@@ -13,9 +13,20 @@ https://github.com/Kin-Zhang/simple_ndt_slam
 注意：
 1、可以不用zsh，用bash的版本也可以 
 2、保存地图前要安装map_server 不然会找不命令，sudo apt install ros-melodic-map-server
+
+运行环境
+cd ~/workspace/mapping_ws
+source /opt/ros/melodic/setup.sh
+source devel/setup.bash
+
 3、play不放在launch文件中时，可以单独开启终端play
    先roslaunch lidar_localizer ndt_mapping.launch
-   然后开新终端 source /opt/ros/melodic/setup.sh 再 rosbag play xxxx.bag
+   
+   然后开新终端 cd bags #切换到包所在的目录
+   source /opt/ros/melodic/setup.sh  #设置环境变量
+   再  rosbag play xxxx.bag          #可以在bag的文件夹下面运行   rosbag play rosbag2_2023_05_05-17_00_36.bag
+   
+   
    rosbag play的参数解释  
    -q 停止在工作台上打印播放的信息（不显示播放完成的进度；
    -d 参数可以用来指定延迟播放的时间（Sec），这是因为如果输入以后直接开始播放的话，那么可能node会错过前面的几帧信息。
@@ -23,8 +34,8 @@ https://github.com/Kin-Zhang/simple_ndt_slam
    -i 立即播放录制文件，不再等待0.2s了；
    --pause 暂停播放，等待按空格开启播放；
  4、保存pcd地图
-    cd cd ~/workspace/mapping_ws
-    source devel/setup.zsh
+    cd ~/workspace/mapping_ws
+    source devel/setup.bash
     rosservice call /save_map '/home/yu/bags/save_map/fx_00.pcd' 0.0
 
 
