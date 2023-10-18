@@ -1,0 +1,14 @@
+1、系统中有不同的cudnn版本的切换方式
+
+环境变量配置并激活
+用vim命令修改用户的 .bashrc 文件，在文件的末尾添加以下几行：
+export CUDA_HOME=/usr/local/cuda-10.2
+export LD_LIBRARY_PATH=/usr/local/cuda-10.2/lib64:$LD_LIBRARY_PATH
+export PATH=/usr/local/cuda-10.2/bin:$PATH
+里面的cuda-10.2可以改成需要的版本。
+激活环境变量，输入命令：
+source ~/.bashrc
+最后nvcc -V 查看当前cuda版本是否改变即可; 链接在此：https://blog.csdn.net/qq_36011385/article/details/110902181
+
+20.04 下CUDA、cuDNN的详细安装与配置过程（图文）
+https://blog.csdn.net/weixin_37926734/article/details/123033286
